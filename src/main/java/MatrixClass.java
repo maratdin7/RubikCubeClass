@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class MatrixClass<T> implements Matrix {
@@ -117,12 +118,37 @@ public class MatrixClass<T> implements Matrix {
         return temp;
     }
 
-    public void rowCut(List row) {
-
+    public List getRow(int row) {
+        if (row >= h) throw new IllegalArgumentException();
+        ArrayList line = new ArrayList();
+        for (int j = 0; j < w; j++) {
+            line.add(get(row, j));
+        }
+        return line;
     }
 
-    public void columnCut(List column) {
 
+    public List getColumn(int column) {
+        if (column >= w) throw new IllegalArgumentException();
+        ArrayList line = new ArrayList();
+        for (int i = 0; i < h; i++) {
+            line.add(get(i, column));
+        }
+        return line;
+    }
+
+    public void setRow(List line, int row) {
+        if (line.size() != w || row >= h) throw new IllegalArgumentException();
+        for (int j = 0; j < w; j++) {
+            set(row, j, line.get(j));
+        }
+    }
+
+    public void setColumn(List line, int column) {
+        if (line.size() != h || column >= w) throw new IllegalArgumentException();
+        for (int i = 0; i < h; i++) {
+            set(i, column, line.get(i));
+        }
     }
 }
 

@@ -1,6 +1,10 @@
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class MatrixClassTest {
@@ -46,4 +50,35 @@ public class MatrixClassTest {
         matrix.writerIn(1);
         assertTrue(matrix.equals(matrix.turnToAny(360)));
     }
+
+    @Test
+    public void setRow() {
+        matrix.writerIn(1);
+        matrix.setRow(a, 2);
+        assertEquals(a, matrix.getRow(2));
+    }
+
+    @Test
+    public void setColumn() {
+        matrix.writerIn(1);
+        matrix = matrix.turnTo90();
+        matrix.setColumn(a, 2);
+        assertEquals(a, matrix.getColumn(2));
+    }
+
+    List<Integer> a = Arrays.asList(1, 2, 3, 4);
+
+    @Test
+    public void getRow() {
+        matrix.writerIn(1);
+        assertEquals(a, matrix.getRow(0));
+        assertNotEquals(a, matrix.getRow(2));
+    }
+
+    @Test
+    public void getColumn() {
+        matrix.writerIn(1);
+        assertEquals(a, matrix.turnTo90().getColumn(9));
+    }
+
 }

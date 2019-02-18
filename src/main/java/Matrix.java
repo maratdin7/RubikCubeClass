@@ -39,9 +39,15 @@ public interface Matrix<T> {
 
     MatrixClass<T> turnToAny(Integer angel);
 
+    //row срока
+    List<T> getRow(int row);
+
+    //column столбец
+    List<T> getColumn(int column);
+
     //вырез строки
-    void rowCut(List<T> row);
+    void setRow(List<T> line, int row);
 
     //вырез столбца
-    void columnCut(List<T> column);
+    void setColumn(List<T> line, int column);
 }
