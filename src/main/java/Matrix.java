@@ -37,7 +37,7 @@ public interface Matrix<T> {
     // поворот
     MatrixClass<T> turnTo90();
 
-    MatrixClass<T> turnToAny(Integer angel);
+    MatrixClass<T> turnTo270();
 
     //row срока
     List<T> getRow(int row);

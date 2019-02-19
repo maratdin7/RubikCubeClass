@@ -46,9 +46,10 @@ public class MatrixClassTest {
     }
 
     @Test
-    public void turnToAny() {
+    public void turnTo270() {
         matrix.writerIn(1);
-        assertTrue(matrix.equals(matrix.turnToAny(360)));
+        matrix = matrix.turnTo270();
+        matrix.printer();
     }
 
     @Test

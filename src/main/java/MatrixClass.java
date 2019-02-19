@@ -14,6 +14,9 @@ public class MatrixClass<T> implements Matrix {
         w = wigth;
     }
 
+    public MatrixClass() {
+    }
+
     public int height() {
         return h;
     }
@@ -108,12 +111,16 @@ public class MatrixClass<T> implements Matrix {
         return temp;
     }
 
-    public MatrixClass turnToAny(Integer angel) {
-        int turn = angel / 90;
-        MatrixClass temp = this;
-        if (angel % 90 != 0) throw new IllegalArgumentException();
-        for (int i = 0; i < turn; i++) {
-            temp = temp.turnTo90();
+    public MatrixClass turnTo270() {
+        MatrixClass temp = new MatrixClass(w, h);
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
+                try {
+                    temp.set(w - j - 1, i, matrix[i][j]);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println(w - j - 1);
+                }
+            }
         }
         return temp;
     }
