@@ -1,64 +1,100 @@
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
-import static org.junit.Assert.*;
+public class CubeRubikTest {// не генерируются тесты
 
-public class CubeRubikTest {
-    CubeRubik cube = new CubeRubik(5);
+    interface lambda { //это нормально?
+        void turn();
+    }
 
-    @Test
-    public void turnCubeTo90() {
+    private CubeRubik cubeFirst = new CubeRubik(3);
+    private CubeRubik cubeSecond = new CubeRubik(3);
+
+    private void turnCube(lambda turn90, lambda turn270) {
+        turn90.turn();
+        turn270.turn();
+        turn270.turn();
+        turn270.turn();
     }
 
     @Test
-    public void turnCubeUpTo90() {
+    public void turnCubeRight() {
+        MatrixClass<Color> a = cubeFirst.left.copy();
+        turnCube(() -> cubeFirst.turnCubeRight(), () -> cubeSecond.turnCubeLeft());
+        assertEquals(cubeFirst, cubeSecond);
+        assertEquals(a, cubeFirst.front);
     }
 
     @Test
-    public void planeHorizonTo90() {
-        List a = Arrays.asList("ye", "ye", "ye", "ye", "ye");
-        cube.back.set(2, 0, "qwerty");
-        cube.planeHorizonTo90(2);
-        assertEquals(a, cube.front.getRow(2));
-        for (MatrixClass i : cube.faceHorizon) {
-            i.printer();
-        }
-
-        cube.top.set(0, 0, "qwerty");
-        MatrixClass q = cube.top.turnTo270();
-        cube.planeHorizonTo90(0);
-        assertTrue(cube.top.equals(q));
+    public void turnCubeUp() {
+        MatrixClass<Color> a = cubeFirst.bottom.copy();
+        turnCube(() -> cubeFirst.turnCubeUp(), () -> cubeSecond.turnCubeDown());
+        assertEquals(cubeFirst, cubeSecond);
+        assertEquals(a, cubeFirst.front);
     }
 
     @Test
-    public void planeVerticalTo90() {
-        List a = Arrays.asList("bl", "bl", "bl", "bl", "bl");
-        cube.back.set(1, 0, "qwerty");
-        cube.left.set(0, 0, "qwerty");
-        cube.planeVerticalTo90(0);
-        assertEquals(a, cube.front.getColumn(0));
-
-        for (MatrixClass i : cube.faceVertical) {
-            i.printer();
-        }
-        cube.left.printer();
-
+    public void putCubeOnLeft() {
+        MatrixClass<Color> a = cubeFirst.front.turnTo270();
+        turnCube(() -> cubeFirst.putCubeOnLeft(), () -> cubeSecond.putCubeOnRight());
+        assertEquals(cubeFirst, cubeSecond);
+        assertEquals(a, cubeFirst.front);
     }
 
     @Test
-    public void planeSideTo270() {
-        List a = Arrays.asList("ye", "ye", "ye", "ye", "qwerty");
-        cube.left.set(0, 4, "qwerty");
-        cube.right.set(0, 0, "qwerty");
-        cube.front.set(0, 0, "qwerty");
-        cube.planeSideTo270(0);
-        assertEquals(a, cube.top.getRow(4));
-        for (MatrixClass i : cube.faceSide) {
-            i.printer();
-        }
-        cube.front.printer();
+    public void turnLayerRight() {
+        MatrixClass<Color> a = cubeFirst.left.copy();
+        a.setRow(cubeFirst.front.getRow(0), 0);
+        turnCube(() -> cubeFirst.turnLayerRight(1, 2), () -> cubeSecond.turnLayerLeft(1, 2));
+        assertEquals(cubeFirst, cubeSecond);
+        assertEquals(a, cubeFirst.front);
+    }
+
+    @Test
+    public void turnLayerUp() {
+        MatrixClass<Color> a = cubeFirst.bottom.copy();
+        a.setColumn(cubeFirst.front.getColumn(0), 0);
+        turnCube(() -> cubeFirst.turnLayerUp(1, 2), () -> cubeSecond.turnLayerDown(1, 2));
+        assertEquals(cubeFirst, cubeSecond);
+        assertEquals(a, cubeFirst.front);
+    }
+
+    @Test
+    public void turnLayerDepthLeft() {
+        MatrixClass<Color> a = cubeFirst.front.turnTo90();
+        turnCube(() -> cubeFirst.turnLayerDepthRight(1, 2), () -> cubeSecond.turnLayerDepthLeft(1, 2));
+        assertEquals(cubeFirst, cubeSecond);
+        assertEquals(a, cubeFirst.front);
+    }
+
+    @Test
+    public void planeHorizonToLeft() {
+        MatrixClass<Color> a = cubeFirst.top.turnTo270();
+        turnCube(() -> cubeFirst.planeHorizonToLeft(0), () -> cubeSecond.planeHorizonToRight(0));
+        assertEquals(cubeFirst, cubeSecond);
+        assertEquals(a, cubeFirst.top);
+    }
+
+    @Test
+    public void planeVerticalToTop() {
+        MatrixClass<Color> a = cubeFirst.left.turnTo270();
+        turnCube(() -> cubeFirst.planeVerticalToTop(0), () -> cubeSecond.planeVerticalToBottom(0));
+        assertEquals(cubeFirst, cubeSecond);
+        assertEquals(a, cubeFirst.left);
+    }
+
+    @Test
+    public void planeSideToRight() {
+        MatrixClass<Color> a = cubeFirst.front.turnTo90();
+        turnCube(() -> cubeFirst.planeSideToRight(0), () -> cubeSecond.planeSideToLeft(0));
+        assertEquals(cubeFirst, cubeSecond);
+        assertEquals(a, cubeFirst.front);
+    }
+
+    @Test
+    public void randomize() {
+        assertNotEquals(cubeFirst, cubeFirst.randomize());
     }
 }

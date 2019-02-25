@@ -12,8 +12,7 @@ public interface Matrix<T> {
 
     T get(Cells cell);
 
-// добавление эл-тов
-
+    // добавление эл-тов
     void set(int row, int column, T value);
 
     void set(Cells cell, T value);
@@ -26,12 +25,7 @@ public interface Matrix<T> {
     //вывод
     void printer();
 
-    // равенство
-    Boolean equals(MatrixClass<T> second);
-
     // заполнение
-    void writerIn(Integer value);
-
     void writerIn(T value);
 
     // поворот
@@ -50,4 +44,13 @@ public interface Matrix<T> {
 
     //вырез столбца
     void setColumn(List<T> line, int column);
+
+    // равенство
+    boolean equals(Object o);
+
+    //hashCode
+    int hashCode();
+
+    //clone
+    MatrixClass<T> copy();
 }

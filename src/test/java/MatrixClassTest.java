@@ -5,7 +5,6 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 
 public class MatrixClassTest {
     MatrixClass matrix = new MatrixClass(10, 4);
@@ -67,7 +66,7 @@ public class MatrixClassTest {
         assertEquals(a, matrix.getColumn(2));
     }
 
-    List<Integer> a = Arrays.asList(1, 2, 3, 4);
+    private List<Integer> a = Arrays.asList(1, 2, 3, 4);
 
     @Test
     public void getRow() {
@@ -82,4 +81,8 @@ public class MatrixClassTest {
         assertEquals(a, matrix.turnTo90().getColumn(9));
     }
 
+    @Test
+    public void copy() {
+        assertEquals(matrix, matrix.copy());
+    }
 }
