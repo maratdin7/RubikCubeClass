@@ -23,25 +23,16 @@ public class MatrixClass<T> implements Matrix<T> {
         return w;
     }
 
+    @Override
     public T get(int row, int column) { //dskflsjgjksfjkl matrix[i][j]
         indexOut(row, column);
         return matrix[row][column];
-    }
-
-    public T get(Cells cell) {
-        indexOut(cell.row, cell.column);
-        return matrix[cell.row][cell.column];
     }
 
     @Override
     public void set(int row, int column, T value) {
         indexOut(row, column);
         matrix[row][column] = value;
-    }
-
-    public void set(Cells cell, T value) {
-        indexOut(cell.row, cell.column);
-        matrix[cell.row][cell.column] = value;
     }
 
     @Override
@@ -88,7 +79,7 @@ public class MatrixClass<T> implements Matrix<T> {
     }
 
     public MatrixClass<T> turnTo90() { //6yigyujyiuihuihgyju
-        MatrixClass<T> temp = new MatrixClass<T>(w, h);
+        MatrixClass<T> temp = new MatrixClass<>(w, h);
         for (int i = 0; i < h; i++) {
             for (int j = 0; j < w; j++) {
                 try {
@@ -102,7 +93,7 @@ public class MatrixClass<T> implements Matrix<T> {
     }
 
     public MatrixClass<T> turnTo270() {
-        MatrixClass<T> temp = new MatrixClass<T>(w, h);
+        MatrixClass<T> temp = new MatrixClass<>(w, h);
         for (int i = 0; i < h; i++) {
             for (int j = 0; j < w; j++) {
                 try {
@@ -117,7 +108,7 @@ public class MatrixClass<T> implements Matrix<T> {
 
     public List<T> getRow(int row) {
         if (row >= h) throw new IllegalArgumentException();
-        ArrayList<T> line = new ArrayList<T>();
+        ArrayList<T> line = new ArrayList<>();
         for (int j = 0; j < w; j++) {
             line.add(get(row, j));
         }
@@ -127,7 +118,7 @@ public class MatrixClass<T> implements Matrix<T> {
 
     public List<T> getColumn(int column) {
         if (column >= w) throw new IllegalArgumentException();
-        ArrayList<T> line = new ArrayList<T>();
+        ArrayList<T> line = new ArrayList<>();
         for (int i = 0; i < h; i++) {
             line.add(get(i, column));
         }
@@ -150,7 +141,7 @@ public class MatrixClass<T> implements Matrix<T> {
 
     @Override
     public MatrixClass<T> copy() { // clone
-        MatrixClass<T> temp = new MatrixClass<T>(h, w);
+        MatrixClass<T> temp = new MatrixClass<>(h, w);
         for (int i = 0; i < h; i++) {
             for (int j = 0; j < w; j++) {
                 temp.set(i, j, this.get(i, j));

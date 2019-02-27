@@ -2,20 +2,11 @@ import java.util.List;
 
 public interface Matrix<T> {
 
-    public class Cells {
-        int row;
-        int column;
-    }
-
     // получение элемента
     T get(int row, int column);
 
-    T get(Cells cell);
-
     // добавление эл-тов
     void set(int row, int column, T value);
-
-    void set(Cells cell, T value);
 
     // размерность
     int height();
