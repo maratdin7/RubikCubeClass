@@ -1,21 +1,24 @@
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 public class CubeRubik implements CubeRubikInterface {
+
+    public static void main(String[] args) {
+
+    }
 
     interface lambda { //это нормально?
         void turn(int i);
     }
 
-    MatrixClass<Color> front;
-    MatrixClass<Color> back;
-    MatrixClass<Color> left;
-    MatrixClass<Color> right;
-    MatrixClass<Color> top;
-    MatrixClass<Color> bottom;
+    Matrix<Color> front;
+    Matrix<Color> back;
+    Matrix<Color> left;
+    Matrix<Color> right;
+    Matrix<Color> top;
+    Matrix<Color> bottom;
 
-    private MatrixClass[] face;
+    private Matrix[] face;
     private int size;
 
     CubeRubik(int n) {
@@ -35,7 +38,11 @@ public class CubeRubik implements CubeRubikInterface {
         top.writerIn(Color.GREEN);
         bottom.writerIn(Color.BLUE);
 
-        face = new MatrixClass[]{front, right, back, left, top, bottom};
+        face = new Matrix[]{front, right, back, left, top, bottom};
+    }
+
+    public int size() {
+        return size;
     }
 
     public void turnCubeRight() {
@@ -92,7 +99,7 @@ public class CubeRubik implements CubeRubikInterface {
         }
     }
 
-    private void planeHorizonTo90(int row, MatrixClass<Color>[] faceHorizon) {
+    private void planeHorizonTo90(int row, Matrix<Color>[] faceHorizon) {
         List<Color> lastRow = faceHorizon[3].getRow(row);
         List<Color> nowRow;
         for (int i = 0; i < 4; i++) {
@@ -112,7 +119,7 @@ public class CubeRubik implements CubeRubikInterface {
     }
 
     public void planeHorizonToLeft(int row) {
-        MatrixClass[] faceHorizon = {front, left, back, right};//jkjkhjk
+        Matrix[] faceHorizon = {front, left, back, right};//jkjkhjk
         planeHorizonTo90(row, faceHorizon);
 
         if (row == 0) top = top.turnTo90();
@@ -120,7 +127,7 @@ public class CubeRubik implements CubeRubikInterface {
     }
 
     public void planeHorizonToRight(int row) {
-        MatrixClass[] faceHorizon = {front, right, back, left};//jkjkjjkljkl
+        Matrix[] faceHorizon = {front, right, back, left};//jkjkjjkljkl
         planeHorizonTo90(row, faceHorizon);
 
         if (row == 0) top = top.turnTo270();
@@ -136,7 +143,7 @@ public class CubeRubik implements CubeRubikInterface {
     }
 
 
-    private void planeVerticalTo90(int column, MatrixClass<Color>[] faceVertical) {
+    private void planeVerticalTo90(int column, Matrix<Color>[] faceVertical) {
         List<Color> lastColumn = faceVertical[3].getColumn(column);
         List<Color> nowColumn;
         for (int i = 0; i < 4; i++) {
@@ -147,14 +154,14 @@ public class CubeRubik implements CubeRubikInterface {
     }
 
     public void planeVerticalToTop(int column) {
-        MatrixClass[] faceVertical = {front, top, back, bottom};
+        Matrix[] faceVertical = {front, top, back, bottom};
         planeVerticalTo90(column, faceVertical);
         if (column == 0) left = left.turnTo270();
         if (column == size - 1) right = right.turnTo90();
     }
 
     public void planeVerticalToBottom(int column) {
-        MatrixClass[] faceVertical = {front, bottom, back, top};
+        Matrix[] faceVertical = {front, bottom, back, top};
         planeVerticalTo90(column, faceVertical);
         if (column == 0) left = left.turnTo90();
         if (column == size - 1) right = right.turnTo270();
@@ -162,7 +169,7 @@ public class CubeRubik implements CubeRubikInterface {
 
 
     public void planeSideToRight(int trueDepth) {
-        MatrixClass[] faceSide = {left, top, right, bottom};
+        Matrix[] faceSide = {left, top, right, bottom};
         int depth = size - 1 - trueDepth;
         List lastLine = faceSide[3].getRow(trueDepth);
         lastLine = toRight(depth, 0, lastLine, faceSide);
@@ -171,7 +178,7 @@ public class CubeRubik implements CubeRubikInterface {
         if (trueDepth == size - 1) back = back.turnTo270();
     }
 
-    private List<Color> toRight(int depth, int i, List<Color> lastLine, MatrixClass<Color>[] faceSide) {
+    private List<Color> toRight(int depth, int i, List<Color> lastLine, Matrix<Color>[] faceSide) {
         List<Color> nowLine = faceSide[i].getColumn(depth);
         reverse(nowLine);
         faceSide[i].setColumn(lastLine, depth);
@@ -183,7 +190,7 @@ public class CubeRubik implements CubeRubikInterface {
     }
 
     public void planeSideToLeft(int trueDepth) {
-        MatrixClass[] faceSide = {top, left, bottom, right};
+        Matrix[] faceSide = {top, left, bottom, right};
         int depth = size - 1 - trueDepth;
         List lastLine = faceSide[3].getColumn(trueDepth);
         lastLine = toLeft(depth, 0, lastLine, faceSide);
@@ -192,7 +199,7 @@ public class CubeRubik implements CubeRubikInterface {
         if (trueDepth == size - 1) back = back.turnTo90();
     }
 
-    private List<Color> toLeft(int depth, int i, List<Color> lastLine, MatrixClass<Color>[] faceSide) {
+    private List<Color> toLeft(int depth, int i, List<Color> lastLine, Matrix<Color>[] faceSide) {
         List<Color> nowLine = faceSide[i].getRow(depth);
         reverse(nowLine);
         faceSide[i].setRow(lastLine, depth);
@@ -202,7 +209,6 @@ public class CubeRubik implements CubeRubikInterface {
         faceSide[i].setColumn(lastLine, depth);
         return nowLine;
     }
-
 
     //писатель
     public void writer() {
@@ -219,7 +225,7 @@ public class CubeRubik implements CubeRubikInterface {
         printTopBottomBack(back);
     }
 
-    private void printTopBottomBack(MatrixClass<Color> face) {
+    private void printTopBottomBack(Matrix<Color> face) {
         String empty = makeStr();
         for (int i = 0; i < size; i++) {
             System.out.print(empty);
@@ -278,35 +284,4 @@ public class CubeRubik implements CubeRubikInterface {
         return result;
     }
 
-    public CubeRubik randomize() {
-        CubeRubik cube = copy();
-        int i = 0;
-        while (i < size * 6) {
-            Random r = new Random();
-            int next = r.nextInt(5);
-            int start = r.nextInt(size - 1);
-            switch (next) {
-                case 0:
-                    cube.turnLayerRight(start, r.nextInt(size - start - 1) + start);
-                    break;
-                case 1:
-                    cube.turnLayerLeft(start, r.nextInt(size - start - 1) + start);
-                    break;
-                case 2:
-                    cube.turnLayerUp(start, r.nextInt(size - start - 1) + start);
-                    break;
-                case 3:
-                    cube.turnLayerDown(start, r.nextInt(size - start - 1) + start);
-                    break;
-                case 4:
-                    cube.turnLayerDepthRight(start, r.nextInt(size - start - 1) + start);
-                    break;
-                case 5:
-                    cube.turnLayerDepthLeft(start, r.nextInt(size - start - 1) + start);
-                    break;
-            }
-            ++i;
-        }
-        return cube;
-    }
 }

@@ -12,7 +12,7 @@ public class MatrixClassTest {
     @Test
     public void copy() {
         writerIn();
-        MatrixClass<Integer> a =matrix.copy();
+        Matrix<Integer> a =matrix.copy();
         assertNotSame(a, matrix);
         assertEquals(a,matrix);
     }
@@ -39,7 +39,7 @@ public class MatrixClassTest {
     @Test
     public void setRow() {
         writerIn();
-        MatrixClass<Integer> a = matrix.copy();
+        Matrix<Integer> a = matrix.copy();
         a.setRow(matrix.getRow(0),1);
         assertNotEquals(a,matrix);
         assertEquals(a.getRow(1),matrix.getRow(0));
@@ -48,7 +48,7 @@ public class MatrixClassTest {
     @Test
     public void setColumn() {
         writerIn();
-        MatrixClass<Integer> a = matrix.copy();
+        Matrix<Integer> a = matrix.copy();
         a.setColumn(matrix.getColumn(0),1);
         assertNotEquals(a,matrix);
         assertEquals(a.getColumn(1),matrix.getColumn(0));

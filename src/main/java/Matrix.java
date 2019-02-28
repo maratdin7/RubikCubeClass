@@ -20,9 +20,9 @@ public interface Matrix<T> {
     void writerIn(T value);
 
     // поворот
-    MatrixClass<T> turnTo90();
+    Matrix<T> turnTo90();
 
-    MatrixClass<T> turnTo270();
+    Matrix<T> turnTo270();
 
     //row срока
     List<T> getRow(int row);
@@ -43,5 +43,5 @@ public interface Matrix<T> {
     int hashCode();
 
     //clone
-    MatrixClass<T> copy();
+    Matrix<T> copy();
 }

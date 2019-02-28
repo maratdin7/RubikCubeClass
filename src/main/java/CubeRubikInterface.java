@@ -1,4 +1,5 @@
 public interface CubeRubikInterface {
+    int size();
 
     //поворот против часовой стрелке(с помощью горизонтали )
     void turnCubeRight();
@@ -53,8 +54,5 @@ public interface CubeRubikInterface {
     boolean equals(Object o);
 
     //copy
-    CubeRubik copy();
-
-    //рандом  как создать утилиту?
-    CubeRubik randomize();
+    CubeRubikInterface copy();
 }

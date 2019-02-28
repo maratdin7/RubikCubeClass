@@ -78,7 +78,7 @@ public class MatrixClass<T> implements Matrix<T> {
         }
     }
 
-    public MatrixClass<T> turnTo90() { //6yigyujyiuihuihgyju
+    public Matrix<T> turnTo90() { //6yigyujyiuihuihgyju
         MatrixClass<T> temp = new MatrixClass<>(w, h);
         for (int i = 0; i < h; i++) {
             for (int j = 0; j < w; j++) {
@@ -92,7 +92,7 @@ public class MatrixClass<T> implements Matrix<T> {
         return temp;
     }
 
-    public MatrixClass<T> turnTo270() {
+    public Matrix<T> turnTo270() {
         MatrixClass<T> temp = new MatrixClass<>(w, h);
         for (int i = 0; i < h; i++) {
             for (int j = 0; j < w; j++) {
@@ -140,7 +140,7 @@ public class MatrixClass<T> implements Matrix<T> {
     }
 
     @Override
-    public MatrixClass<T> copy() { // clone
+    public Matrix<T> copy() {
         MatrixClass<T> temp = new MatrixClass<>(h, w);
         for (int i = 0; i < h; i++) {
             for (int j = 0; j < w; j++) {
